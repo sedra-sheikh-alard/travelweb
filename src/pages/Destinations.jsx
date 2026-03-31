@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Destinations.css";
 
 // Locally hosted high-fidelity 4K assets
-import imgCappadocia from '../assets/destinations/cappadocia.jpg';
-import imgUzungol from '../assets/destinations/uzungol.jpg';
-import imgAlUla from '../assets/destinations/al-ula.jpg';
-import imgShebara from '../assets/destinations/shebara.jpg';
-import imgZermatt from '../assets/destinations/zermatt.jpg';
-import imgLakeComo from '../assets/destinations/lake-como.jpg';
-import imgMountFuji from '../assets/destinations/mount-fuji.jpg';
-import imgShibuya from '../assets/destinations/shibuya.jpg';
-
+import imgCappadocia from '../assets/destinations/capadocia.webp';
+import imgUzungol from '../assets/destinations/uzungol.webp';
+import imgAlUla from '../assets/destinations/al-ula.webp';
+import imgShebara from '../assets/destinations/shebara.webp';
+import imgZermatt from '../assets/destinations/ZERMATT.webp';
+import imgLakeComo from '../assets/destinations/LAKECOMO.webp';
+import imgMountFuji from '../assets/destinations/MOUNTFUJI.webp';
+import imgShibuya from '../assets/destinations/SHIBUYA.webp';
+import imgPosphorus from '../assets/destinations/bosphorus.webp';
 // ==========================================
 // CENTRALIZED DATA (Aligned with Home.jsx Map)
 // ==========================================
@@ -36,6 +36,21 @@ const DESTINATIONS = [
         place: "UZUNGOL",
         img: imgUzungol,
         thumb: imgUzungol,
+        rating: "4.7",
+        weather: "12°C",
+        duration: "2-3 Days",
+        description: "A gorgeous lake situated to the south of the city of Trabzon. Over the years, it has become a major tourist attraction, noted for its stunning natural beauty, high mountains, and deep green forests.",
+        reviews: [
+            { name: "Fatima A.", avatar: "https://i.pravatar.cc/150?img=5", rating: 4, date: "August 2025", text: "The weather was incredibly crisp and refreshing compared to the city. Very peaceful nature walks." },
+            { name: "John D.", avatar: "https://i.pravatar.cc/150?img=15", rating: 5, date: "July 2025", text: "Absolutely stunning lake views. The local tea houses around the water are magnificent." }
+        ]
+    },
+    {
+        id: "Bosphorus",
+        country: "TURKEY",
+        place: "Bosphorus",
+        img: imgPosphorus,
+        thumb: imgPosphorus,
         rating: "4.7",
         weather: "12°C",
         duration: "2-3 Days",
@@ -142,7 +157,7 @@ function Destinations() {
     // ==========================================
     // null = Grid view. If object = Immersive Scrollable View.
     const [selectedDest, setSelectedDest] = useState(null);
-    
+
     // Parallax Coordinates tracker
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -171,15 +186,15 @@ function Destinations() {
     // ==========================================
     // SEARCH & PAGINATION LOGIC
     // ==========================================
-    const filteredDestinations = DESTINATIONS.filter(dest => 
-        dest.country.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const filteredDestinations = DESTINATIONS.filter(dest =>
+        dest.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
         dest.place.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredDestinations.length / ITEMS_PER_PAGE);
 
     const currentItems = filteredDestinations.slice(
-        currentPage * ITEMS_PER_PAGE, 
+        currentPage * ITEMS_PER_PAGE,
         (currentPage + 1) * ITEMS_PER_PAGE
     );
 
@@ -193,12 +208,12 @@ function Destinations() {
     if (selectedDest) {
         return (
             <div className="dest-immersive">
-                
+
                 {/* 
                   Fixed Background Layer. 
                   This stays planted while you scroll down, and still reacts to the mouse.
                 */}
-                <div 
+                <div
                     className="dest-immersive-bg"
                     style={{
                         backgroundImage: `url(${selectedDest.img})`,
@@ -208,7 +223,7 @@ function Destinations() {
                 <div className="dest-immersive-overlay"></div>
 
                 {/* Back button fixed to the top left */}
-                <button 
+                <button
                     className="dest-back-btn"
                     onClick={() => setSelectedDest(null)}
                 >
@@ -217,14 +232,14 @@ function Destinations() {
 
                 {/* SCROLLABLE CONTENT WRAPPER */}
                 <div className="dest-scrollable-content">
-                    
+
                     {/* Hero Section (100vh) */}
                     <div className="dest-hero-screen">
                         <div className="dest-hero-typo">
                             <p className="dest-immersive-country">{selectedDest.country}</p>
                             <h1 className="dest-immersive-place">{selectedDest.place}.</h1>
                         </div>
-                        
+
                         {/* Scroll Down Indicator */}
                         <div className="dest-scroll-indicator">
                             <span>Scroll for Details</span>
@@ -242,12 +257,12 @@ function Destinations() {
 
                     {/* Rich Details & Reviews Section (Scrolls up to cover the text) */}
                     <div className="dest-details-section">
-                        
+
                         {/* Left Column: Place Information */}
                         <div className="dest-info-column">
                             <h2 className="dest-section-title">Overview</h2>
                             <p className="dest-description">{selectedDest.description}</p>
-                            
+
                             <div className="dest-stats-grid">
                                 <div className="dest-stat-box">
                                     <span className="stat-label">Rating</span>
@@ -305,9 +320,9 @@ function Destinations() {
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input 
-                            type="text" 
-                            placeholder="Search (e.g. Fuji, Swiss)" 
+                        <input
+                            type="text"
+                            placeholder="Search (e.g. Fuji, Swiss)"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -317,8 +332,8 @@ function Destinations() {
                 <div className="dest-grid">
                     {currentItems.length > 0 ? (
                         currentItems.map((dest) => (
-                            <div 
-                                key={dest.id} 
+                            <div
+                                key={dest.id}
                                 className="dest-card"
                                 onClick={() => setSelectedDest(dest)}
                             >
@@ -335,8 +350,8 @@ function Destinations() {
                 {totalPages > 1 && (
                     <div className="dest-grid-pagination">
                         {Array.from({ length: totalPages }).map((_, idx) => (
-                            <span 
-                                key={idx} 
+                            <span
+                                key={idx}
                                 className={idx === currentPage ? "active" : ""}
                                 onClick={() => setCurrentPage(idx)}
                                 style={{ cursor: "pointer" }}
@@ -345,7 +360,7 @@ function Destinations() {
                     </div>
                 )}
             </div>
-            
+
             <div className="dest-bg-text">TRAVELO</div>
         </div>
     );
